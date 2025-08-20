@@ -34,7 +34,7 @@ Clone o repositório e compile com o .NET CLI:
 
 ```bash
 git clone https://github.com/catrique/audio-transcription.git
-cd transcrever-audio
+cd audio-transcription
 dotnet build
 ```
 
