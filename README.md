@@ -1,83 +1,58 @@
-# Projeto de Transcrição de Áudio (Whisper.net)
+# 🎙️ Transcrição de Áudio com Whisper.net
 
-Este é um projeto simples em C\# que usa a biblioteca [Whisper.net](https://github.com/sandrohanea/whisper.net) para transcrever arquivos de áudio em formato MP3 para texto. Ele usa o **FFmpeg** para converter o áudio para um formato compatível e, em seguida, aplica o modelo de IA do Whisper para gerar a transcrição.
+Este projeto realiza a transcrição automática de arquivos de áudio usando [Whisper.net](https://github.com/Const-me/Whisper) e [FFmpeg](https://ffmpeg.org/). Basta colocar o arquivo de áudio no mesmo diretório do programa e executar — o texto transcrito será salvo em um arquivo `.txt`.
 
-### Pré-requisitos
+## 🚀 Como funciona
 
-Para que o projeto funcione corretamente, você precisa ter o **FFmpeg** instalado na sua máquina.
+1. Converte o áudio para o formato `.wav` com 16kHz e canal mono usando FFmpeg.
+2. Baixa o modelo Whisper (LargeV3) se ainda não estiver presente.
+3. Processa o áudio e gera a transcrição.
+4. Salva o resultado em `nome_do_arquivo_da_transcricao.txt`.
 
------
+## 📁 Estrutura esperada
 
-### Como Instalar o FFmpeg
+Coloque o arquivo de áudio no mesmo diretório do executável ou do código-fonte. Exemplo:
 
-A instalação varia dependendo do seu sistema operacional.
-
-#### Windows
-
-1.  Vá para a [página de download do FFmpeg](https://ffmpeg.org/download.html).
-2.  Clique no ícone do Windows e escolha uma das opções, como o link do **gyan.dev**.
-3.  Baixe o arquivo ZIP da versão `essentials`.
-4.  Descompacte o conteúdo em uma pasta, por exemplo, `C:\ffmpeg`.
-5.  Adicione o caminho para a pasta `bin` do FFmpeg (`C:\ffmpeg\bin`) nas **Variáveis de Ambiente** do seu sistema. Isso permite que você execute o `ffmpeg` a partir de qualquer diretório no terminal.
-
-#### macOS
-
-Se você usa o [Homebrew](https://brew.sh/), a instalação é bem simples:
-
-```bash
-brew install ffmpeg
+```
+transcrever/
+├── Program.cs
+├── ggml-large-v3.bin (gerado automaticamente)
+├── arquivo_de_audio.mp3
+├── arquivo_de_audio.wav (gerado automaticamente)
+├── nome_do_arquivo_da_transcricao.txt (gerado automaticamente)
 ```
 
-#### Linux (Ubuntu/Debian)
+## 🛠️ Requisitos
 
-Use o gerenciador de pacotes `apt`:
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
+- [FFmpeg](https://ffmpeg.org/download.html) instalado e disponível no PATH
+- Conexão com a internet (para baixar o modelo na primeira execução)
+
+## 📦 Instalação
+
+Clone o repositório e compile com o .NET CLI:
 
 ```bash
-sudo apt update
-sudo apt install ffmpeg
+git clone https://github.com/catrique/audio-transcription.git
+cd transcrever-audio
+dotnet build
 ```
 
------
+## ▶️ Execução
 
-### Como Usar o Projeto
+```bash
+dotnet build
+dotnet run
+```
 
-1.  **Clone o repositório:**
+O programa irá:
 
-    ```bash
-    git clone https://github.com/catrique/audio-transcription.git
-    cd audio-transcription
-    ```
+1. Converter o áudio para `.wav` com FFmpeg
+2. Baixar o modelo Whisper (se necessário)
+3. Transcrever o áudio
+4. Salvar o texto em `nome_do_arquivo_da_transcricao.txt`
 
-2.  **Posicione o arquivo MP3:**
-    Você deve colocar o arquivo de áudio que deseja transcrever (`.mp3`) na pasta de saída do projeto, que é **`bin/Debug/net8.0`**.
+## 📝 Resultado
 
-    A estrutura de pastas deve ficar assim:
+A transcrição será exibida no console e salva em `nome_do_arquivo_da_transcricao.txt`.
 
-    ```
-    transcrever/
-    ├── bin/
-    │   └── Debug/
-    │       └── net8.0/
-    │           └── seu-audio-aqui.mp3  <-- COLOQUE O ARQUIVO AQUI
-    ├── obj/
-    ├── Program.cs
-    └── transcrever.csproj
-    ```
-
-3.  **Execute o projeto:**
-    Abra um terminal na pasta raiz do projeto (`transcrever/`) e execute:
-
-    ```bash
-    dotnet run
-    ```
-
-    Na primeira execução, o programa fará o download de um modelo de IA de aproximadamente 3 GB, o que pode levar alguns minutos dependendo da sua conexão.
-
-### O que o código faz?
-
-O programa executa as seguintes etapas:
-
-1.  Usa o FFmpeg para converter o arquivo `flor.mp3` para o formato `flor.wav`, que é o formato ideal para o modelo Whisper.
-2.  Verifica se o modelo de IA (`ggml-model-whisper-large-q5_0.bin`) já foi baixado. Se não, ele faz o download automático.
-3.  Processa o arquivo `flor.wav` e transcreve o áudio para o português.
-4.  Imprime a transcrição no console e salva o texto em um arquivo chamado `flor.txt`.

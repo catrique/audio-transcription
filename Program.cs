@@ -4,20 +4,19 @@ using Whisper.net.Ggml;
 
 Console.WriteLine("Whisper.net");
 
-string outputFilePath = "flor.txt";
+string outputFilePath = "nome_do_arquivo_da_transcricao.txt";
 using var transcript = File.CreateText(outputFilePath);
-Process.Start("ffmpeg", "-i flor.mp3 -ar 16000 -ac 1 flor.wav").WaitForExit();
+Process.Start("ffmpeg", "-i arquivo_de_audio.mp3 -ar 16000 -ac 1 arquivo_de_audio.wav").WaitForExit();
 
-
-var modelName = "ggml-model-whisper-large-q5_0.bin";
+var modelName = "ggml-large-v3.bin";
 if (!File.Exists(modelName))
 {
-    using var modelStream = await WhisperGgmlDownloader.GetGgmlModelAsync(GgmlType.LargeV3);
+    Console.WriteLine("Baixando!");
+    using var modelStream = await WhisperGgmlDownloader.GetGgmlModelAsync(GgmlType.LargeV2);
+
     using var fileWriter = File.OpenWrite(modelName);
     await modelStream.CopyToAsync(fileWriter);
 }
-
-
 
 Console.WriteLine("Processando audio...");
 
@@ -27,7 +26,7 @@ using var builder = whisperFactory.CreateBuilder()
     .Build();
 
 
-using var audioStream = File.OpenRead("flor.wav");
+using var audioStream = File.OpenRead("arquivo_de_audio.wav");
 
 await foreach (var result in builder.ProcessAsync(audioStream))
 {

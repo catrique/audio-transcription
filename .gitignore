@@ -13,8 +13,4 @@
 # Estes são arquivos muito grandes e devem ser ignorados.
 # O seu código baixa eles automaticamente quando necessário.
 *.gguf
-
-# Arquivos de áudio e dados temporários
-# O seu código gera e consome estes arquivos, não são parte do código-fonte.
-flor.wav
-flor.txt
+*ggml-large-v3.bin
