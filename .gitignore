@@ -12,7 +12,6 @@
 # Arquivos de modelo da IA do Whisper.net
 # Estes são arquivos muito grandes e devem ser ignorados.
 # O seu código baixa eles automaticamente quando necessário.
-ggml-*.bin
 *.gguf
 
 # Arquivos de áudio e dados temporários
