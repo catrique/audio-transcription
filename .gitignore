@@ -1,0 +1,21 @@
+# Pastas de build e de saída
+[Bb]in/
+[Oo]bj/
+.vs/
+
+# Arquivos de depuração e de compilação
+*.exe
+*.dll
+*.pdb
+*.suo
+
+# Arquivos de modelo da IA do Whisper.net
+# Estes são arquivos muito grandes e devem ser ignorados.
+# O seu código baixa eles automaticamente quando necessário.
+ggml-*.bin
+*.gguf
+
+# Arquivos de áudio e dados temporários
+# O seu código gera e consome estes arquivos, não são parte do código-fonte.
+flor.wav
+flor.txt
